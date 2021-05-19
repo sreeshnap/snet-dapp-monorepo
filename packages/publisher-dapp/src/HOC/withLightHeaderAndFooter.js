@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 const withLightHeaderAndFooter = Component => {
   return props => {
     const classes = useStyles();
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(false);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
 
     const onUpdateCloseClick = () => {
       setShowUpdateNotificationBar(false);
