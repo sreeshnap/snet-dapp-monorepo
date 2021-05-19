@@ -25,17 +25,20 @@ var UpdateNotificationBar = function UpdateNotificationBar(_ref) {
       onCloseClick = _ref.onCloseClick;
   if (!showNotification) return null;
   return /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.parentUpdateNotificationBar
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.updateNotificationBar
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _AnnoucementIcon.default,
     alt: "Announcment"
-  }), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", null, "Phase 2 white paper avaliable now! "), /*#__PURE__*/_react.default.createElement("a", {
-    href: "#",
-    title: "Read More"
-  }, "Read more on our official blog post.", /*#__PURE__*/_react.default.createElement(_ArrowForwardIos.default, null))), /*#__PURE__*/_react.default.createElement(_Close.default, {
+  }), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", null, "SingularityNET Phase II Launch Sequence Activated! "), /*#__PURE__*/_react.default.createElement("a", {
+    href: "https://blog.singularitynet.io/singularitynet-phase-ii-launch-sequence-activated-agi-token-to-be-hard-forked-to-10ede4b6c89",
+    title: "Read More",
+    target: "_blank"
+  }, "Read more on our official blog.", /*#__PURE__*/_react.default.createElement(_ArrowForwardIos.default, null))), /*#__PURE__*/_react.default.createElement(_Close.default, {
     className: classes.closeIcon,
     onClick: onCloseClick
-  }));
+  })));
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(UpdateNotificationBar);
