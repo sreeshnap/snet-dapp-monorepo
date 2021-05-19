@@ -71,7 +71,7 @@ const withDashboardMenu = Component => {
     ];
 
     const classes = useStyles();
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(false);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
 
     const onUpdateCloseClick = () => {
       setShowUpdateNotificationBar(false);
