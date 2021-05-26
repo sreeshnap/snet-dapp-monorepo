@@ -54,7 +54,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     history.push(OrganizationSetupRoutes.REGION.path.replace(":orgUuid", organization.uuid));
   };
 
-  const shouldPublishBeDisabled = () => !ownerAddress || email !== ownerEmail;
+  const shouldPublishBeDisabled = () => true || !ownerAddress || email !== ownerEmail;
 
   return (
     <Fragment>
@@ -87,6 +87,19 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       </div>
       <div className={classes.publishAlertContainer}>
         <AlertBox message={alert.message} type={alert.type} children={alert.children} />
+      </div>
+      <div className={classes.publishAlertContainer}>
+        <AlertBox type={alertTypes.WARNING}>
+          We have temporarily disabled this action as we are hard forking the AGI token to make it cross compatible. We
+          will enable it as soon as the hard fork is completed. Read more{" "}
+          <a
+            href="https://blog.singularitynet.io/singularitynet-phase-ii-launch-sequence-activated-agi-token-to-be-hard-forked-to-10ede4b6c89"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            here
+          </a>
+        </AlertBox>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
