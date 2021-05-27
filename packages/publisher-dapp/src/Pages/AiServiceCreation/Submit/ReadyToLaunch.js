@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import VerificationApprovedImage from "shared/dist/assets/images/VerificationApproved.png";
 
 const ReadyToLaunch = ({ classes, handlePublish, handleBackToDashboard, alert, openDaemonConfigModal }) => {
@@ -42,10 +42,27 @@ const ReadyToLaunch = ({ classes, handlePublish, handleBackToDashboard, alert, o
                 </Typography>
               </li>
             </ul>
+            <AlertBox type={alertTypes.WARNING}>
+              We have temporarily disabled this action as we are hard forking the AGI token to make it cross chain
+              compatible. We will enable it as soon as the hard fork is completed. Read more{" "}
+              <a
+                href="https://blog.singularitynet.io/singularitynet-phase-ii-launch-sequence-activated-agi-token-to-be-hard-forked-to-10ede4b6c89"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                here
+              </a>
+            </AlertBox>
           </Fragment>
         }
         actions={[
-          { children: "Launch Service", variant: "contained", color: "primary", onClick: handlePublish },
+          {
+            children: "Launch Service",
+            variant: "contained",
+            color: "primary",
+            onClick: handlePublish,
+            disabled: true,
+          },
           { children: "back to dashboard", variant: "outlined", color: "primary", onClick: handleBackToDashboard },
         ]}
         type={statusTitleType.PENDING}
