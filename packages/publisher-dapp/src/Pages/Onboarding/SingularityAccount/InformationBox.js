@@ -12,16 +12,7 @@ const InformationBox = () => {
     return (
       <AlertBox
         type={alertTypes.INFO}
-        message="Please Note:  In order for your company organization name to be listed on AI Marketplace, your company must be recognized as a legal entity in your country.  You will need to provide a DUNS number to be validated for approval "
-      />
-    );
-  }
-
-  if (userEntity === userEntities.INDIVIDUAL) {
-    return (
-      <AlertBox
-        type={alertTypes.INFO}
-        message="Please Note:  Signing up as Individual / Sole Proprietor / Single Person Business requires you to verify your identity."
+        message="Please Note:  In order for your company organization name to be listed on our AI Marketplace, your company must be recognized as a legal entity in your country."
       />
     );
   }

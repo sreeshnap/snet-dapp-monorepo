@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/styles";
-
 export const useStyles = makeStyles(MUITheme => ({
   numberContaienr: {
     width: 28,
@@ -23,25 +22,31 @@ export const useStyles = makeStyles(MUITheme => ({
         },
         "@media (max-width:470px)": { display: "none" },
       },
+      "& svg": {
+        padding: 3,
+        borderRadius: 25,
+        color: MUITheme.palette.text.white,
+        fontSize: 22,
+      },
     },
   },
   TabTitle: {
     paddingTop: 10,
-    color: MUITheme.palette.text.lightGrey,
+    color: MUITheme.palette.primary.main,
     fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
     letterSpacing: 0.13,
   },
   completedIcon: {
     "&::after": { marginLeft: "10px !important" },
-    "& svg": {
-      padding: 3,
-      borderRadius: 25,
-      background: MUITheme.palette.success.main,
-      color: MUITheme.palette.text.white,
-      fontSize: 22,
-    },
+    "& svg": { background: MUITheme.palette.success.main },
     "@media(max-width:480px)": { padding: "0 !important" },
+  },
+  errorIcon: {
+    "& svg": { background: MUITheme.palette.error.main },
+  },
+  waitingIcon: {
+    "& svg": { background: "#F18D5A" },
   },
   active: {
     "& div": {
@@ -56,8 +61,35 @@ export const useStyles = makeStyles(MUITheme => ({
     "& > div": { background: "transparent" },
     "& span": {
       "&:last-of-type": {
-        paddingTop: 0,
+        paddingTop: 5,
         color: MUITheme.palette.text.darkGrey,
+      },
+    },
+  },
+  succeeded: {
+    "& > div": { background: "transparent" },
+    "& span": {
+      "&:last-of-type": {
+        paddingTop: 5,
+        color: MUITheme.palette.text.darkGrey,
+      },
+    },
+  },
+  failed: {
+    "& > div": { background: "transparent" },
+    "& span": {
+      "&:last-of-type": {
+        paddingTop: 3,
+        color: MUITheme.palette.error.main,
+      },
+    },
+  },
+  pending: {
+    "& > div": { background: "transparent" },
+    "& span": {
+      "&:last-of-type": {
+        paddingTop: 1,
+        color: "#F18D5A",
       },
     },
   },

@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { progressText, serviceCreationSections, serviceCreationStatus } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText, sections, progressStatus } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -31,6 +31,42 @@ class AiServiceCreation extends Component {
     }
   };
 
+  progressStatus = () => {
+    let progressStage = {};
+    const { progressStages, assets, shortDescription } = this.props.serviceDetails;
+
+    const { demoFiles, protoFiles } = assets;
+
+    for (const stage of progressStages) {
+      if (stage.section === sections.SETUP_DEMO && demoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: demoFiles.status };
+      } else if (stage.section === sections.PRICING_AND_DISTRIBUTION && protoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: protoFiles.status };
+      } else if (stage.section === sections.AI_PROFILE && shortDescription) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
+      } else {
+        progressStage = { ...progressStage, [stage.key]: stage.status };
+      }
+
+      if (
+        (stage.section === sections.LAUNCH && demoFiles.status === progressStatus.PENDING) ||
+        protoFiles.status === progressStatus.PENDING
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.PENDING };
+      }
+
+      if (
+        stage.section === sections.LAUNCH &&
+        demoFiles.status === progressStatus.SUCCEEDED &&
+        protoFiles.status === progressStatus.SUCCEEDED
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
+      }
+    }
+
+    return progressStage;
+  };
+
   initData = async () => {
     const {
       getAiServiceList,
@@ -38,12 +74,13 @@ class AiServiceCreation extends Component {
       initServiceCreationLoader,
       stopInitServiceCreationLoader,
       orgId,
+      serviceStatus,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    this.setState({ serviceDetails });
+    this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
@@ -54,6 +91,7 @@ class AiServiceCreation extends Component {
 
   componentDidUpdate = async prevProps => {
     const { orgId, orgUuid, serviceUuid, serviceTouched, serviceDetails } = this.props;
+
     if (
       orgId &&
       orgUuid &&
@@ -67,6 +105,7 @@ class AiServiceCreation extends Component {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
     }
+
     if (
       serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
       serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
@@ -77,7 +116,7 @@ class AiServiceCreation extends Component {
 
   activeSection = () => {
     const path = this.props.location.pathname;
-    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
+    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, LAUNCH } = serviceCreationSections;
     if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
     }
@@ -87,8 +126,8 @@ class AiServiceCreation extends Component {
     if (path.includes(last(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path.split("/")))) {
       return PRICING_AND_DISTRIBUTION;
     }
-    if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
-      return SUBMIT;
+    if (path.includes(last(ServiceCreationRoutes.LAUNCH.path.split("/")))) {
+      return LAUNCH;
     }
     return PROFILE;
   };
@@ -100,11 +139,26 @@ class AiServiceCreation extends Component {
 
   handleSubmit = async () => {
     const { serviceDetails } = this.state;
-    const { orgUuid, serviceUuid, history, location, saveServiceDetails, setServiceDetailsInRedux } = this.props;
-    setServiceDetailsInRedux(serviceDetails);
-    await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
-    if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
-      history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    const {
+      orgUuid,
+      serviceUuid,
+      history,
+      saveServiceDetails,
+      setServiceDetailsInRedux,
+      publishToIPFS,
+      publishService,
+      organization,
+    } = this.props;
+
+    try {
+      setServiceDetailsInRedux(serviceDetails);
+      await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
+
+      const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
+      await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
+      this.handleBackToDashboard();
+    } catch (e) {
+      throw e;
     }
   };
 
@@ -190,6 +244,25 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  getTheProgressText = () => {
+    const { assets } = this.props.serviceDetails;
+
+    return progressText.map(progress => {
+      if (assets.demoFiles.status === progressStatus.PENDING && progress.section === sections.SETUP_DEMO) {
+        return "Demo Component build is in progress...";
+      }
+
+      if (
+        assets.protoFiles.status === progressStatus.PENDING &&
+        progress.section === sections.PRICING_AND_DISTRIBUTION
+      ) {
+        return "Proto compilation is in progress...";
+      }
+
+      return progress.title;
+    });
+  };
+
   render() {
     const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
@@ -201,10 +274,12 @@ class AiServiceCreation extends Component {
         )}
         <ProgressBar
           activeSection={this.activeSection().key}
-          progressText={progressText}
+          progressText={this.getTheProgressText()}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
+          progressStatus={this.progressStatus()}
         />
         <ServiceCreationRouter
+          handleSubmit={this.handleSubmit}
           serviceDetails={this.state.serviceDetails}
           changeServiceDetailsLeaf={this.handleServiceDetailsLeafChange}
           changeHeroImage={this.handleHeroImageChange}
@@ -223,12 +298,14 @@ class AiServiceCreation extends Component {
 }
 
 const mapStateToProps = state => ({
+  organization: state.organization,
   orgId: state.organization.id,
   orgUuid: state.organization.uuid,
   serviceUuid: state.aiServiceDetails.uuid,
   serviceFoundInBlockchain: state.aiServiceDetails.foundInBlockchain,
   serviceTouched: state.aiServiceDetails.touched,
   serviceDetails: state.aiServiceDetails,
+  serviceStatus: state.aiServiceDetails.progressStages,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -241,5 +318,10 @@ const mapDispatchToProps = dispatch => ({
   saveServiceDetails: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails)),
   setServiceDetailsInRedux: serviceDetails => dispatch(aiServiceDetailsActions.setAllAttributes(serviceDetails)),
+  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
+  publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
+  publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
+    dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

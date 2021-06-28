@@ -72,7 +72,11 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     if (name === basicDetailsFormData.ORG_ID.name) {
       debouncedValidate(value);
     }
-    dispatch(organizationActions.setOneBasicDetail(name, value));
+    if (name === "id") {
+      dispatch(organizationActions.setOneBasicDetail(name, value.replace(/\s/g, "")));
+    } else {
+      dispatch(organizationActions.setOneBasicDetail(name, value));
+    }
   };
 
   const handleContactsChange = event => {
@@ -87,7 +91,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     dispatch(organizationActions.setContacts(updatedContacts));
   };
   return (
-    <Grid container>
+    <Grid container className={classes.basicDetailsContainer}>
       {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
         <Fragment>
           <SNETTextField
@@ -118,7 +122,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         <div className={classes.dunsContainer}>
           <FormControlLabel
             control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
-            label="I have my DUNS number"
+            label="I have my DUNS number (Optional)"
           />
           <SNETTextField
             {...basicDetailsFormData.DUNS}
@@ -133,20 +137,6 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
-      {userEntity === userEntities.INDIVIDUAL || orgDetails.type === organizationTypes.INDIVIDUAL ? (
-        <React.Fragment>
-          <SNETTextField
-            {...basicDetailsFormData.REGISTRATION_ID_TYPE}
-            value={orgDetails.registrationType}
-            onChange={handleChange}
-          />
-          <SNETTextField
-            {...basicDetailsFormData.REGISTRATION_ID}
-            value={orgDetails.registrationId}
-            onChange={handleChange}
-          />
-        </React.Fragment>
-      ) : null}
     </Grid>
   );
 };

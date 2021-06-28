@@ -33,6 +33,8 @@ export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
+export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
+export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -344,12 +346,14 @@ const parseServiceDetails = (data, serviceUuid) => {
       demoFiles: data.media.demo_files
         ? {
             url: data.media.demo_files.url,
+            status: data.media.demo_files?.status.toLowerCase(),
             ipfsHash: data.media.demo_files.ipfs_hash,
           }
         : {},
       protoFiles: data.media.proto_files
         ? {
             url: data.media.proto_files.url,
+            status: data.media.proto_files?.status.toLowerCase(),
             ipfsHash: data.media.proto_files.ipfs_hash,
           }
         : {},
@@ -600,4 +604,28 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
     dispatch(loaderActions.stopAppLoader());
     throw e;
   }
+};
+
+export const updateBuildStatus = (section, status, progressStatuses) => {
+  const updatedStatus = progressStatuses.map(progress => {
+    if (progress.section === section) {
+      return { ...progress, status };
+    }
+
+    return progress;
+  });
+
+  return { type: SET_BUILD_STATUS, payload: updatedStatus };
+};
+
+export const updateProgressStatus = (section, status, progressStatuses) => {
+  const updatedStatuses = progressStatuses.map(progress => {
+    if (progress.section === section) {
+      return { ...progress, status };
+    }
+
+    return progress;
+  });
+
+  return { type: SET_PROGRESS_STATUS, payload: updatedStatuses };
 };
