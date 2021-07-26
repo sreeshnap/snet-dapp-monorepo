@@ -35,8 +35,14 @@ export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
 export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
+export const SET_DEMO_COMPONENT_AVAILABLE = "SET_DEMO_COMPONENT_AVAILABLE";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
+
+export const setDemoComponentAvialble = demoComponentAvailable => ({
+  type: SET_DEMO_COMPONENT_AVAILABLE,
+  payload: demoComponentAvailable,
+});
 
 export const setServiceTouchedFlag = touchFlag => ({
   type: SET_AI_SERVICE_TOUCHED_FLAG,
@@ -53,7 +59,7 @@ export const setServiceAvailability = serviceAvailability => ({
   payload: serviceAvailability,
 });
 
-const setServiceName = serviceName => ({
+export const setServiceName = serviceName => ({
   type: SET_AI_SERVICE_NAME,
   payload: serviceName,
 });
@@ -110,6 +116,29 @@ export const createService = (orgUuid, serviceName) => async dispatch => {
     }
     dispatch(setServiceName(serviceName));
     dispatch(setServiceUuid(data.service_uuid));
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const createLaunchAiService = (orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.LAUNCH_AI_SERVICE(orgUuid, serviceUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const launchAiService = (orgUuid, serviceUuid) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_IPFS));
+    const { data, error } = await dispatch(createLaunchAiService(orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
     dispatch(loaderActions.stopAppLoader());
     return data;
   } catch (error) {
@@ -194,6 +223,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
+        required: serviceDetails.demoComponentAvailable ? 1 : 0,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
@@ -279,6 +309,8 @@ export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch
       throw new APIError(error.message);
     }
     const service = parseServiceDetails(data, serviceUuid);
+    const demoComponentAvailable = data.media.demo_files?.required ?? true;
+    dispatch(setDemoComponentAvialble(demoComponentAvailable));
     dispatch(setAllAttributes(service));
     return service;
   } catch (error) {
@@ -346,14 +378,15 @@ const parseServiceDetails = (data, serviceUuid) => {
       demoFiles: data.media.demo_files
         ? {
             url: data.media.demo_files.url,
-            status: data.media.demo_files?.status.toLowerCase(),
+            status: data.media.demo_files?.status?.toLowerCase(),
             ipfsHash: data.media.demo_files.ipfs_hash,
+            required: data.media.demo_files?.required ?? true,
           }
         : {},
       protoFiles: data.media.proto_files
         ? {
             url: data.media.proto_files.url,
-            status: data.media.proto_files?.status.toLowerCase(),
+            status: data.media.proto_files?.status?.toLowerCase(),
             ipfsHash: data.media.proto_files.ipfs_hash,
           }
         : {},
