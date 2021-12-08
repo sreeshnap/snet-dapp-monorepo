@@ -43,8 +43,11 @@ class NetworkChangeOverlay extends Component {
   };
 
   componentDidMount() {
+    if(ethereum)
+    {
     ethereum.request({ method: ethereumMethods.REQUEST_CHAIN_ID }).then(this.validateChainId);
     ethereum.on(ethereumEvents.CHAIN_CHANGED, this.validateChainId);
+    }
   }
 
   render() {
