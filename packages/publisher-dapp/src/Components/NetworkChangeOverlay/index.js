@@ -6,6 +6,7 @@ import Modal from "@material-ui/core/Modal";
 import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/styles";
 import Web3 from "web3";
+import isNil from "lodash/isNil";
 
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
@@ -43,10 +44,9 @@ class NetworkChangeOverlay extends Component {
   };
 
   componentDidMount() {
-    if(ethereum)
-    {
-    ethereum.request({ method: ethereumMethods.REQUEST_CHAIN_ID }).then(this.validateChainId);
-    ethereum.on(ethereumEvents.CHAIN_CHANGED, this.validateChainId);
+    if (!isNil(ethereum)) {
+      ethereum.request({ method: ethereumMethods.REQUEST_CHAIN_ID }).then(this.validateChainId);
+      ethereum.on(ethereumEvents.CHAIN_CHANGED, this.validateChainId);
     }
   }
 
