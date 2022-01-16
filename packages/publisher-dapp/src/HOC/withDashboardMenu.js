@@ -14,6 +14,9 @@ import Header from "../Components/Header";
 import { FooterData } from "./footerContent";
 import { GlobalRoutes } from "../GlobalRouter/Routes";
 
+import { useStyles } from "./styles";
+import { localStorageKeys, useLocalStorage } from "shared/dist/hooks/useLocalStorage";
+
 const selectState = state => ({ orgUuid: state.organization.uuid });
 
 const withDashboardMenu = Component => {
@@ -68,14 +71,31 @@ const withDashboardMenu = Component => {
       },
     ];
 
+    const classes = useStyles();
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
+      localStorageKeys.SHOW_PHASE2_NOTIFICATION,
+      true
+    );
+
+    const onUpdateCloseClick = () => {
+      setShowUpdateNotificationBar(false);
+    };
+
     return (
       <div>
-        <Header />
+        <Header showNotification={showUpdateNotification} onCloseClick={onUpdateCloseClick} />
         <Grid container spacing={24}>
-          <Grid item xs={2} sm={2} md={2} lg={2}>
+          <Grid
+            item
+            xs={2}
+            sm={2}
+            md={2}
+            lg={2}
+            className={showUpdateNotification ? classes.addMarginTopToVerticalTab : null}
+          >
             <VerticalTabs upperTabs={upperTabs} lowerTabs={lowerTabs} />
           </Grid>
-          <Grid item xs={2} sm={10} md={10} lg={10}>
+          <Grid item xs={2} sm={10} md={10} lg={10} className={showUpdateNotification ? classes.addMarginTop : null}>
             <Component {...props} />
           </Grid>
         </Grid>

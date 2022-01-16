@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
@@ -8,6 +9,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import CreateStake from "../CreateStake";
 import UserStake from "../UserStake";
 import ClaimStake from "../ClaimStake";
@@ -15,6 +17,13 @@ import StakeTransitions from "../StakeTransitions";
 import { useStyles } from "./styles";
 import { stakeActions, userActions } from "../../Services/Redux/actionCreators";
 import { userWalletActions } from "../../Services/Redux/actionCreators/userActions";
+
+const indexMapForTabs = {
+  openstake: 0,
+  incubating: 1,
+  readytoclaim: 2,
+  transactions: 3,
+};
 
 class StakeTab extends Component {
   constructor(props) {
@@ -45,6 +54,12 @@ class StakeTab extends Component {
 
     // Get the User Preferences - Will be enhancing in the next release
     //getUserPreferences();
+
+    const activetab = this.props.match.params.activetab;
+    const defaultTab = indexMapForTabs[activetab?.toLowerCase()];
+    if (defaultTab) {
+      this.setState({ selectedTab: defaultTab });
+    }
   };
 
   componentDidUpdate = async (prevProps, _prevState) => {
@@ -94,8 +109,17 @@ class StakeTab extends Component {
     }
   };
 
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
+
   // Tab Change
   handleTabChange = (_event, value) => {
+    const { history } = this.props;
+    const nextTab = this.getKeyByValue(indexMapForTabs, value);
+    if (nextTab) {
+      history.push(GlobalRoutes.LANDING.path.replace(":activetab", nextTab));
+    }
     this.setState({ selectedTab: value });
     this.refreshTabContent(value);
   };
@@ -109,7 +133,14 @@ class StakeTab extends Component {
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.servieMainContainer}>
           <div className={classes.tabsContainer}>
             <AppBar position="static" color="default" className={classes.header}>
-              <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
+              <Tabs
+                value={selectedTab}
+                onChange={this.handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                scrollButtons="on"
+                variant="scrollable"
+              >
                 <Tab className="singularity-tab" label="Open Staking" value={0} />
                 <Tab className="singularity-tab" label={`Incubating (${stakeSummary.incubatingCount})`} value={1} />
                 <Tab
@@ -165,4 +196,4 @@ const mapDispatchToProps = dispatch => ({
   fetchStakeWindowsSummary: () => dispatch(stakeActions.fetchStakeWindowsSummary()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(StakeTab));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(StakeTab)));

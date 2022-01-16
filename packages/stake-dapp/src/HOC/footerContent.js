@@ -8,7 +8,7 @@ const PrimaryFooterLeft = [
 
 const PrimaryFooterMain = [
   {
-    title: "AGI Staking",
+    title: "AGIX Staking",
     children: [
       { label: "How it Works", link: "/howitworks" },
       { label: "Stake Calculator", link: "/howitworks" },
@@ -28,7 +28,6 @@ const PrimaryFooterMain = [
     children: [
       { label: "AI Marketplace", link: "https://beta.singularitynet.io" },
       { label: "AI Publisher", link: "https://publisher.singularitynet.io" },
-      { label: "Request For AI (RFAI)", link: "https://rfai.singularitynet.io" },
       { label: "Stake", link: "https://staking.singularitynet.io" },
     ],
   },

@@ -32,4 +32,5 @@ export const APIPaths = {
   STAKE_OVERALL_SUMMARY: "/stake-summary",
   STAKE_WINDOWS_SUMMARY: "/stake-windows",
   STAKE_CALCULATOR: "/stake-calculator",
+  SCHEDULE_SESSION: "/stake-window/schedule",
 };

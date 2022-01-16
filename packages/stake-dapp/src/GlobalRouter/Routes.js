@@ -2,6 +2,7 @@ import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
 import withTncHeader from "../HOC/withTncHeader";
+import Schedule from "../Pages/Schedule";
 import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
@@ -43,6 +44,7 @@ const AcceptAgreementComponent = withTncHeader(AcceptAgreement, null, "Logout", 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
 const FAQComponent = withLightHeaderAndFooter(FAQ);
+const ScheduleComponent = withLightHeaderAndFooter(Schedule);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -82,7 +84,7 @@ export const GlobalRoutes = {
   },
   LANDING: {
     name: "landing",
-    path: "/landing",
+    path: "/landing/:activetab?",
     component: LandingComponent,
   },
   ACCEPT_AGREEMENT: {
@@ -99,6 +101,11 @@ export const GlobalRoutes = {
     name: "faq",
     path: "/faq",
     component: FAQComponent,
+  },
+  SCHEDULE: {
+    name: "schedule",
+    path: "/schedule",
+    component: ScheduleComponent,
   },
 };
 
