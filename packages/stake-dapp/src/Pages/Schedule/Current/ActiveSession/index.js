@@ -64,7 +64,10 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
         {currentTimeInDMY < submissionEndPeriod && !isEmpty(activeSessionDetail) ? (
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
             <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeOpenSessionDetails}>
-              <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.window_id : ""}</span>
+                <span>
+                    Stake Session {moment.unix(activeSessionDetail.start_period).format("MMM YYYY")} #
+                    {activeSessionDetail.window_id}
+                </span>
               <span className={classes.activeTag}>incubating</span>
               <div>
                 <div>
@@ -118,7 +121,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
         {currentTimeInDMY < submissionEndPeriod && !isEmpty(openSessionDetails) ? (
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.openSessionBox}>
             <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeOpenSessionDetails}>
-              <span>Stake Session Aug 2020 #{openSessionDetails ? openSessionDetails.window_id : ""}</span>
+              <span>Stake Session {moment.unix(openSessionDetails.start_period).format("MMM YYYY")} #{openSessionDetails.window_id}</span>
               <span className={classes.liveTag}>open</span>
               <div>
                 <div>
