@@ -66,6 +66,7 @@ class PricingDistribution extends Component {
               changeProtoFiles={changeProtoFiles}
               protoFilesUrl={serviceDetails.assets.protoFiles.url}
               invalidFields={this.state.invalidFields}
+              protoFileError={this.props.serviceDetailsState.assets.protoFiles.status}
             />
             <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
             <div className={classes.alertContainer}>
@@ -87,6 +88,7 @@ const mapStateToProps = state => ({
   groupId: state.organization.groups[0].id,
   serviceId: state.aiServiceDetails.id,
   username: state.user.email,
+  serviceDetailsState: state.aiServiceDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
