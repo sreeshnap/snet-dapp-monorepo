@@ -21,7 +21,7 @@ const FileStats = props => {
           <div className={error ? classes.errorField : classes.uploadStatusContainer}>
             <FolderIcon />
             <Typography className={uploadSuccess ? classes.uploaded : classes.uploadStatus}>
-              {uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded"}
+              {uploadSuccess ? "Files Uploaded Successfully" : "No/Wrong Files Uploaded"}
             </Typography>
           </div>
         </div>
