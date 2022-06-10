@@ -9,7 +9,7 @@
  
 ## Prerequisites
 ### Windows
-- Node >= 10.14.1 < 12.0.0
+- Node >= 12.0.0
 - yarn >= 1.15.0 < 2.0.0
 ### Linux
 - Node >= 10.16.0 < 12.0.0
