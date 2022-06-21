@@ -12,7 +12,6 @@ import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 import ServicePublishedPopup from "./ServicePublishedPopup";
-// import { set } from "lodash";
 
 const devPortalUrl = "https://dev.singularitynet.io/docs/ai-developers/";
 
@@ -49,7 +48,7 @@ class AiServices extends Component {
   handlePageChange = userClickedPagination => {
     const { pagination, setAiServiceListPagination } = this.props;
 
-    var newPagination = {};
+    let newPagination = {};
     if (userClickedPagination.offset === 0 && userClickedPagination.limit) {
       newPagination = {
         ...pagination,
