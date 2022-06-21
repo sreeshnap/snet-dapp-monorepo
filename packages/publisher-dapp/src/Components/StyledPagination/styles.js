@@ -1,14 +1,14 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
-  paginationContainer: {
+  paginationContainerPublisher: {
     paddingTop: 14,
     "@media(max-width: 480px)": {
       flexDirection: "column-reverse",
       alignItems: "center",
     },
   },
-  pageListformControl: {
+  pageListformControlPublisher: {
     width: 72,
     margin: "0 12px 0 15px",
     "& div": {
@@ -26,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
       "& legend": { display: "none" },
     },
   },
-  pageCountSection: {
+  pageCountSectionPublisher: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -37,7 +37,7 @@ export const useStyles = makeStyles(theme => ({
     "@media(max-width: 768px)": { marginBottom: 15 },
   },
 
-  styledPagination: {
+  styledPaginationPublisher: {
     "& button": { color: theme.palette.text.grayTitleText },
     "& .MuiFlatPagination-rootCurrent": {
       padding: "0 8px",

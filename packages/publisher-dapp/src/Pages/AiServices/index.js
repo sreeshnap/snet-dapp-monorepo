@@ -45,7 +45,7 @@ class AiServices extends Component {
     this.props.setRecentlyPublishedService(undefined);
   };
 
-  handlePageChange = userClickedPagination => {
+  handlePageChangePublisher = userClickedPagination => {
     const { pagination, setAiServiceListPagination } = this.props;
 
     let newPagination = {};
@@ -106,7 +106,7 @@ class AiServices extends Component {
             <ServiceCollection
               pagination={pagination}
               totalCount={totalCount}
-              handlePageChange={this.handlePageChange}
+              handlePageChangePublisher={this.handlePageChangePublisher}
             />
           </Grid>
           <CreateNewServicePopup open={showPopUp} handleClose={this.handleClosePopup} />

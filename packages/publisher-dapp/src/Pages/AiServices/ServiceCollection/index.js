@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
 
-import StyledPagination from "../../../Components/StyledPagination";
+import StyledPaginationPublisher from "../../../Components/StyledPagination";
 
 // import { useSelector, useDispatch } from "react-redux";
 
@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 // import { setAiServiceListPagination } from "../../../Services/Redux/actionCreators/aiServiceListActions";
 
 // TODO uncomment pagination and toolbox once it is ready
-const ServiceCollection = ({ classes, pagination, totalCount, handlePageChange }) => {
+const ServiceCollection = ({ classes, pagination, totalCount, handlePageChangePublisher }) => {
   // const { limit, offset, totalCount } = useSelector(state => ({
   //   limit: state.aiServiceList.pagination.limit,
   //   offset: state.aiServiceList.pagination.offset,
@@ -26,7 +26,7 @@ const ServiceCollection = ({ classes, pagination, totalCount, handlePageChange }
   //   dispatch(setAiServiceListPagination({ limit: itemsPerPage }));
   // };
   //
-  // const handlePageChange = offset => {
+  // const handlePageChangePublisher = offset => {
   //   dispatch(setAiServiceListPagination({ offset }));
   // };
 
@@ -38,11 +38,11 @@ const ServiceCollection = ({ classes, pagination, totalCount, handlePageChange }
     <div className={classes.serviceCollection}>
       {/*<ToolBar />*/}
       <CardGroup />
-      <StyledPagination
+      <StyledPaginationPublisher
         limit={pagination.limit}
         offset={pagination.offset}
         total_count={totalCount}
-        handleChange={handlePageChange}
+        handleChange={handlePageChangePublisher}
       />
       {/* <SNETPagination
         itemsPerPageOptions={itemsPerPageOptions}
@@ -51,7 +51,7 @@ const ServiceCollection = ({ classes, pagination, totalCount, handlePageChange }
         limit={limit}
         offset={offset}
         totalCount={totalCount}
-        onPageChange={handlePageChange}
+        onPageChange={handlePageChangePublisher}
       />*/}
     </div>
   );

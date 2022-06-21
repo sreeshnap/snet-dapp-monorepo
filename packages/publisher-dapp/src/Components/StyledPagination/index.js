@@ -8,11 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { useStyles } from "./styles";
 
-const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
+const StyledPaginationPublisher = ({ limit, offset, total_count, handleChange }) => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const classes = useStyles();
 
-  const handleItemsPerPage = event => {
+  const handleItemsPerPagePublisher = event => {
     const pagination = {
       offset: 0,
       limit: event.target.value,
@@ -21,7 +21,7 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
     handleChange(pagination);
   };
 
-  const handlePageChange = selectedOffset=> {
+  const handlePageChangePublisher = selectedOffset=> {
     if (selectedOffset === parseFloat(offset)) {
       return;
     }
@@ -34,23 +34,23 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
   const currentLastItemExceed = total_count - currentFirstItem + currentFirstItem;
 
   return (
-    <Grid container spacing={24} className={classes.paginationContainer}>
+    <Grid container spacing={24} className={classes.paginationContainerPublisher}>
       <Grid item xs={6} sm={6} md={6} lg={6} className={classes.pagination}>
         <Pagination
           limit={limit}
           offset={offset}
           total={total_count}
           reduced={true}
-          onClick={(_e,offset_value) => handlePageChange(offset_value)}
-          className={classes.styledPagination}
+          onClick={(_e,offset_value) => handlePageChangePublisher(offset_value)}
+          className={classes.styledPaginationPublisher}
         />
       </Grid>
-      <Grid item xs={6} sm={6} md={6} lg={6} className={classes.pageCountSection}>
+      <Grid item xs={6} sm={6} md={6} lg={6} className={classes.pageCountSectionPublisher}>
         <span className={classes.itemPerPageTxt}>Items per page</span>
-        <FormControl variant="outlined" className={classes.pageListformControl}>
+        <FormControl variant="outlined" className={classes.pageListformControlPublisher}>
           <Select
             value={itemsPerPage}
-            input={<OutlinedInput labelWidth={75} name="age" id="outlined-age-simple" onChange={handleItemsPerPage} />}
+            input={<OutlinedInput labelWidth={75} name="age" id="outlined-age-simple" onChange={handleItemsPerPagePublisher} />}
             className={classes.selectBox}
           >
             <MenuItem value={12}>12</MenuItem>
@@ -72,4 +72,4 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
   );
 };
 
-export default StyledPagination;
+export default StyledPaginationPublisher;
