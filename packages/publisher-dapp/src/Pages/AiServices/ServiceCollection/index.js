@@ -56,5 +56,4 @@ const ServiceCollection = ({ classes, pagination, totalCount, handlePageChange }
     </div>
   );
 };
-
 export default withStyles(useStyles)(ServiceCollection);

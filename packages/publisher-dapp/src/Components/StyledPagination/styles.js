@@ -36,6 +36,7 @@ export const useStyles = makeStyles(theme => ({
     },
     "@media(max-width: 768px)": { marginBottom: 15 },
   },
+
   styledPagination: {
     "& button": { color: theme.palette.text.grayTitleText },
     "& .MuiFlatPagination-rootCurrent": {

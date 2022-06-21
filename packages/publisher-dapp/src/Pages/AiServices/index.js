@@ -50,7 +50,6 @@ class AiServices extends Component {
     const { pagination, setAiServiceListPagination } = this.props;
 
     var newPagination = {};
-
     if (userClickedPagination.offset === 0 && userClickedPagination.limit) {
       newPagination = {
         ...pagination,

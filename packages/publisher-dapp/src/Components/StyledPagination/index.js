@@ -21,7 +21,7 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
     handleChange(pagination);
   };
 
-  const handlePageChange = selectedOffset => {
+  const handlePageChange = selectedOffset=> {
     if (selectedOffset === parseFloat(offset)) {
       return;
     }
@@ -41,7 +41,7 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
           offset={offset}
           total={total_count}
           reduced={true}
-          onClick={(e, offset) => handlePageChange(offset, e)}
+          onClick={(e,offset) => handlePageChange(offset)}
           className={classes.styledPagination}
         />
       </Grid>
