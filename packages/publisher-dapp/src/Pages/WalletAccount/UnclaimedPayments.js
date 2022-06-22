@@ -15,7 +15,7 @@ const UnclaimedPayments = ({
   payments,
   // handleClaimChannel,
   pagination,
-  handlePageChange,
+  handlePageChangePublisher,
   onItemsPerPageChange,
   selectedChannels,
   onSelectChannel,
@@ -71,7 +71,7 @@ const UnclaimedPayments = ({
           limit={limit}
           offset={offset}
           totalCount={totalCount}
-          onPageChange={handlePageChange}
+          onPageChange={handlePageChangePublisher}
         />
       </Grid>
     </div>
