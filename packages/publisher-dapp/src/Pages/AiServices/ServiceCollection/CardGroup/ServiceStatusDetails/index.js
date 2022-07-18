@@ -166,7 +166,8 @@ const ServiceStatusDetails = props => {
   };
 
   const handleApproved = () => {
-    const path = ServiceCreationRoutes.SUBMIT.path;
+    //const path = ServiceCreationRoutes.SUBMIT.path;
+    const path = ServiceCreationRoutes.LAUNCH.path;
     const redirectTo = path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid);
     history.push(redirectTo);
   };
