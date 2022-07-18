@@ -45,8 +45,27 @@ class AiServices extends Component {
     this.props.setRecentlyPublishedService(undefined);
   };
 
+  handlePageChangePublisher = userClickedPagination => {
+    const { pagination, setAiServiceListPagination } = this.props;
+
+    let newPagination = {};
+    if (userClickedPagination.offset === 0 && userClickedPagination.limit) {
+      newPagination = {
+        ...pagination,
+        limit: userClickedPagination.limit,
+        offset: userClickedPagination.offset,
+      };
+    } else {
+      newPagination = {
+        ...pagination,
+        offset: userClickedPagination.offset,
+      };
+    }
+    setAiServiceListPagination(newPagination);
+  };
+
   render() {
-    const { classes, recentlyPublishedService } = this.props;
+    const { classes, recentlyPublishedService, pagination, totalCount } = this.props;
     const { showPopUp } = this.state;
 
     return (
@@ -84,7 +103,11 @@ class AiServices extends Component {
                 <img src={ServiceImage} alt="Services" />
               </Grid>
             </Grid>
-            <ServiceCollection />
+            <ServiceCollection
+              pagination={pagination}
+              totalCount={totalCount}
+              handlePageChangePublisher={this.handlePageChangePublisher}
+            />
           </Grid>
           <CreateNewServicePopup open={showPopUp} handleClose={this.handleClosePopup} />
         </div>
@@ -98,11 +121,13 @@ const mapStateToProps = state => ({
   orgUuid: state.organization.uuid,
   pagination: state.aiServiceList.pagination,
   recentlyPublishedService: state.aiServiceList.recentlyPublishedService,
+  totalCount: state.aiServiceList.totalCount,
 });
 
 const mapDispatchToProps = dispatch => ({
   getAiServiceList: (orgUuid, pagination) => dispatch(aiServiceListActions.getAiServiceList(orgUuid, pagination)),
   setRecentlyPublishedService: serviceName => dispatch(aiServiceListActions.setRecentlyPublishedService(serviceName)),
+  setAiServiceListPagination: pagination => dispatch(aiServiceListActions.setAiServiceListPagination(pagination)),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(AiServices));

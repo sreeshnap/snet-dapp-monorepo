@@ -344,7 +344,7 @@ class WalletAccount extends React.Component {
     }));
   };
 
-  handlePageChange = offset => {
+  handlePageChangePublisher = offset => {
     this.setState(prevState => ({
       pagination: { ...prevState.pagination, offset },
     }));
@@ -400,7 +400,6 @@ class WalletAccount extends React.Component {
     if (!mmAuthorized) {
       return <MmAuthorization handleAuthorizeMM={this.handleAuthorizeMM} alert={getPaymentsListAlert} />;
     }
-
     return (
       <Grid container className={classes.walletAccContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.topSection}>
@@ -448,7 +447,7 @@ class WalletAccount extends React.Component {
                 payments={paymentsList}
                 pagination={pagination}
                 onItemsPerPageChange={this.onItemsPerPageChange}
-                handlePageChange={this.handlePageChange}
+                handlePageChangePublisher={this.handlePageChangePublisher}
                 selectedChannels={selectedChannels}
                 onSelectChannel={this.handleSelectChannel}
               />

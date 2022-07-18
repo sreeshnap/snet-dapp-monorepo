@@ -13,8 +13,9 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import { assetTypes } from "../../../../Utils/FileUpload";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
+import { progressStatus } from "../../constant";
 
-const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
+const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields, protoFileError }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
@@ -28,7 +29,13 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         message: "File have been uploaded. You can download your files on clicking the download button",
       });
     }
-  }, [alert.message, protoFilesUrl]);
+    if (protoFileError === progressStatus.FAILED) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message: "Error processing your proto file. Please check if you have uploaded a valid file",
+      });
+    }
+  }, [alert.message, protoFilesUrl, protoFileError]);
 
   const validateProtoFile = uploadedFile => {
     const protoFileRegexPattern = "(proto)";
