@@ -186,7 +186,8 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
   };
 
   const handlePriceValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
+    // const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
+    const isNotValid = value >= cogsToAgi(1) ? false : true;
     if (isNotValid) {
       return setPriceValidation({
         type: alertTypes.ERROR,
