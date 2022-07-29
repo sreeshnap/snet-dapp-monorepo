@@ -20,6 +20,7 @@ import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints, daemonValidationConstraints } from "../validationConstraints";
 import { agiToCogs } from "shared/dist/utils/Pricing";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
+import BigNumber from "bignumber.js";
 
 import AlertText from "shared/dist/components/AlertText";
 
@@ -185,9 +186,12 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     changeGroups(updatedServiceGroups);
   };
 
+  const isDecimalPlacesExceeds = (value, decimals) => {
+    return new BigNumber(value).decimalPlaces() > decimals;
+  };
+
   const handlePriceValidation = value => {
-    // const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
-    const isNotValid = value >= cogsToAgi(1) ? false : true;
+    const isNotValid = value >= cogsToAgi(1) && !isDecimalPlacesExceeds(value, 8) ? false : true;
     if (isNotValid) {
       return setPriceValidation({
         type: alertTypes.ERROR,
