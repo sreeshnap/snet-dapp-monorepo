@@ -48,12 +48,10 @@ var useStyles = function useStyles(MUITheme) {
       marginTop: 0,
       marginBottom: 10
     }),
-    infoIconContainer: {
-      "& svg": {
-        padding: "5px 10px 0 0",
-        fontSize: 20,
-        color: "#d6d6d6"
-      }
+    infoIcon: {
+      padding: "5px 10px 0 0",
+      fontSize: 20,
+      color: "#d6d6d6"
     },
     charLength: _defineProperty({
       marginBottom: 25,

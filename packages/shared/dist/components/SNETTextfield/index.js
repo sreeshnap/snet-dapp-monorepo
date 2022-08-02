@@ -17,13 +17,17 @@ var _styles = require("@material-ui/core/styles");
 
 var _Info = _interopRequireDefault(require("@material-ui/icons/Info"));
 
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
+
 var _styles2 = require("./styles");
 
 var _StyledTextField = _interopRequireDefault(require("shared/dist/components/StyledTextField"));
 
+var _excluded = ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "infoMsg", "onKeyUp", "extraInfo", "inputRef", "InputProps", "error"];
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -41,12 +45,13 @@ var SNETTextfield = function SNETTextfield(_ref) {
       disabled = _ref.disabled,
       description = _ref.description,
       icon = _ref.icon,
+      infoMsg = _ref.infoMsg,
       onKeyUp = _ref.onKeyUp,
       extraInfo = _ref.extraInfo,
       inputRef = _ref.inputRef,
       InputProps = _ref.InputProps,
       error = _ref.error,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef", "InputProps", "error"]);
+      rest = _objectWithoutProperties(_ref, _excluded);
 
   return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
@@ -58,9 +63,11 @@ var SNETTextfield = function SNETTextfield(_ref) {
     md: 6,
     lg: 6,
     className: classes.basicTextFieldGrid
-  }, icon ? /*#__PURE__*/_react.default.createElement("div", {
-    className: classes.infoIconContainer
-  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
+  }, icon ? /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
+    title: infoMsg ? infoMsg : ""
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, {
+    className: classes.infoIcon
+  })) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textFieldWithExtraText
   }, /*#__PURE__*/_react.default.createElement(_StyledTextField.default, _extends({
     name: name,

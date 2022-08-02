@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import { useStyles } from "./styles";
 
@@ -17,6 +18,7 @@ const SNETTextarea = ({
   minCount,
   maxCount,
   showInfoIcon,
+  infoMsg,
   extraInfo,
   disabled,
   error,
@@ -24,9 +26,9 @@ const SNETTextarea = ({
   return (
     <div className={classes.textareaIconContainer}>
       {showInfoIcon ? (
-        <div className={classes.infoIconContainer}>
-          <InfoIcon />
-        </div>
+        <Tooltip title={infoMsg ? infoMsg : ""}>
+          <InfoIcon className={classes.infoIcon} />
+        </Tooltip>
       ) : null}
       <div className={classes.textareaContainer}>
         <span className={classes.label}>{label}</span>

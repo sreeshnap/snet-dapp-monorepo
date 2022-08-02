@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.base64ToArrayBuffer = exports.getFileBinary = void 0;
+exports.getFileBinary = exports.base64ToArrayBuffer = void 0;
 
 var getFileBinary = function getFileBinary(file) {
   return new Promise(function (resolve, reject) {

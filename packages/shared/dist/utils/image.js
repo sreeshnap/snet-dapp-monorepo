@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.imgSrcInBase64 = exports.fileTypeToMimeType = exports.mimeTypeToFileType = void 0;
+exports.mimeTypeToFileType = exports.imgSrcInBase64 = exports.fileTypeToMimeType = void 0;
 
 var mimeTypeToFileType = function mimeTypeToFileType(mimeType) {
   if (!mimeType) {

@@ -13,6 +13,8 @@ var _styles = require("@material-ui/core/styles");
 
 var _Info = _interopRequireDefault(require("@material-ui/icons/Info"));
 
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
+
 var _styles2 = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -29,14 +31,17 @@ var SNETTextarea = function SNETTextarea(_ref) {
       minCount = _ref.minCount,
       maxCount = _ref.maxCount,
       showInfoIcon = _ref.showInfoIcon,
+      infoMsg = _ref.infoMsg,
       extraInfo = _ref.extraInfo,
       disabled = _ref.disabled,
       error = _ref.error;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaIconContainer
-  }, showInfoIcon ? /*#__PURE__*/_react.default.createElement("div", {
-    className: classes.infoIconContainer
-  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
+  }, showInfoIcon ? /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
+    title: infoMsg ? infoMsg : ""
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, {
+    className: classes.infoIcon
+  })) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaContainer
   }, /*#__PURE__*/_react.default.createElement("span", {
     className: classes.label

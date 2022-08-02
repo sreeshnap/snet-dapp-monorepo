@@ -7,7 +7,7 @@ exports.default = exports.MUITheme = void 0;
 
 var _styles = require("@material-ui/core/styles");
 
-var MUITheme = (0, _styles.createMuiTheme)({
+var MUITheme = (0, _styles.createTheme)({
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
     values: {

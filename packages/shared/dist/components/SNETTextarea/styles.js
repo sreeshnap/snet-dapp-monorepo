@@ -8,14 +8,13 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     textareaIconContainer: {
-      display: "flex"
+      display: "flex",
+      alignItems: "flex-start"
     },
-    infoIconContainer: {
-      "& svg": {
-        padding: "5px 10px 0 0",
-        fontSize: 20,
-        color: "#d6d6d6"
-      }
+    infoIcon: {
+      padding: "5px 10px 0 0",
+      fontSize: 20,
+      color: "#d6d6d6"
     },
     textareaContainer: {
       position: "relative",

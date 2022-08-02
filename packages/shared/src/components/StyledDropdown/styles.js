@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
+  infoIcon: {
+    padding: "5px 10px 0 0",
+    fontSize: 20,
+    color: "#d6d6d6",
+  },
   formControl: {
     width: 364,
     paddingLeft: 23,

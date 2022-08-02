@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.agiInDecimal = exports.agiToCogs = exports.cogsToAgi = void 0;
+exports.cogsToAgi = exports.agiToCogs = exports.agiInDecimal = void 0;
 var priceData = {
   fixed_price_model: "fixed_price",
   fixed_price_per_method: "fixed_price_per_method",

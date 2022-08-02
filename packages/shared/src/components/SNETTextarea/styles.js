@@ -1,11 +1,12 @@
 export const useStyles = MUITheme => ({
-  textareaIconContainer: { display: "flex" },
-  infoIconContainer: {
-    "& svg": {
-      padding: "5px 10px 0 0",
-      fontSize: 20,
-      color: "#d6d6d6",
-    },
+  textareaIconContainer: {
+    display: "flex",
+    alignItems: "flex-start",
+  },
+  infoIcon: {
+    padding: "5px 10px 0 0",
+    fontSize: 20,
+    color: "#d6d6d6",
   },
   textareaContainer: {
     position: "relative",

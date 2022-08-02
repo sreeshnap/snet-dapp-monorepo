@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
-import InfoIcon from "@material-ui/icons/Info";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -201,7 +200,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
             your descriptions are clear as this will be displayed on the AI marketplace.
           </Typography>
           <SNETTextfield
-            icon
             name="name"
             label="AI Service Name"
             minCount={serviceDetails.name.length}
@@ -214,7 +212,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           />
           <div className={classes.serviceIdContainer}>
             <SNETTextfield
-              icon
               name="id"
               label="AI Service Id"
               minCount={serviceDetails.newId.length}
@@ -236,6 +233,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           <div className={classes.shortDescContainer}>
             <SNETTextarea
               showInfoIcon
+              infoMsg="A short description about your service, which shouldn't be more then 160 character."
               name="shortDescription"
               label="Short Description"
               minCount={serviceDetails.shortDescription.length}
@@ -255,6 +253,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           <div className={classes.longDescContainer}>
             <SNETTextarea
               showInfoIcon
+              infoMsg="A long description, giving some brief details about your service, which shouldn't be more then 5000 character."
               name="longDescription"
               label="Long Description"
               minCount={serviceDetails.longDescription.length}
@@ -270,7 +269,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           </div>
 
           <SNETTextfield
-            icon
             name="tags"
             label="Input Tags"
             extraInfo="Insert multiple items separated by comma, hit enter to add"
@@ -288,7 +286,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           />
           <div className={classes.addedTagsContainer}>
             <div>
-              <InfoIcon />
               <span className={classes.addTagLabel}>Added Tags</span>
               <Card className={classes.card}>
                 {serviceDetails.tags.map(tag => (
@@ -321,6 +318,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
           <div className={classes.contributorsContainer}>
             <SNETTextfield
               icon
+              infoMsg="Name of all the contributors for this service"
               name="contributors"
               label="Contributors"
               minCount={serviceDetails.contributors.length}

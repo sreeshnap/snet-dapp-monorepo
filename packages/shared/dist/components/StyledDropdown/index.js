@@ -15,13 +15,17 @@ var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
 
 var _InputLabel = _interopRequireDefault(require("@material-ui/core/InputLabel"));
 
+var _Info = _interopRequireDefault(require("@material-ui/icons/Info"));
+
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _styles = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var StyledDropdown = function StyledDropdown(_ref) {
   var labelTxt = _ref.labelTxt,
@@ -30,9 +34,15 @@ var StyledDropdown = function StyledDropdown(_ref) {
       onChange = _ref.onChange,
       formControlProps = _ref.formControlProps,
       inputLabel = _ref.inputLabel,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      icon = _ref.icon,
+      infoMsg = _ref.infoMsg;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement(_FormControl.default, _extends({
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, icon ? /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
+    title: infoMsg ? infoMsg : ""
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, {
+    className: classes.infoIcon
+  })) : null, /*#__PURE__*/_react.default.createElement(_FormControl.default, _extends({
     variant: "outlined",
     className: classes.formControl
   }, formControlProps), inputLabel ? /*#__PURE__*/_react.default.createElement(_InputLabel.default, {
@@ -53,7 +63,7 @@ var StyledDropdown = function StyledDropdown(_ref) {
       value: item.value,
       className: classes.menuItem
     }, item.label);
-  })));
+  }))));
 };
 
 StyledDropdown.propTypes = {

@@ -17,9 +17,11 @@ var _Icon = _interopRequireDefault(require("@material-ui/core/Icon"));
 
 var _styles = require("./styles");
 
+var _excluded = ["disabled", "onClick", "type", "btnType", "iconClass", "href", "newTab", "btnText"];
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -45,7 +47,7 @@ var StyledButton = function StyledButton(_ref) {
       href = _ref.href,
       newTab = _ref.newTab,
       btnText = _ref.btnText,
-      rest = _objectWithoutProperties(_ref, ["disabled", "onClick", "type", "btnType", "iconClass", "href", "newTab", "btnText"]);
+      rest = _objectWithoutProperties(_ref, _excluded);
 
   var classes = (0, _styles.useStyles)();
   return /*#__PURE__*/_react.default.createElement(_Button.default, _extends({

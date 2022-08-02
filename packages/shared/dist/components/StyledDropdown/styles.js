@@ -9,6 +9,11 @@ var _styles = require("@material-ui/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
+    infoIcon: {
+      padding: "5px 10px 0 0",
+      fontSize: 20,
+      color: "#d6d6d6"
+    },
     formControl: {
       width: 364,
       paddingLeft: 23,
