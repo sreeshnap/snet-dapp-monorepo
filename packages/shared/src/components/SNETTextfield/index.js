@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
@@ -33,9 +32,10 @@ const SNETTextfield = ({
     <Grid container className={error ? classes.errorField : ""}>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.basicTextFieldGrid}>
         {icon ? (
-          <Tooltip title={infoMsg ? infoMsg : ""}>
-            <InfoIcon className={classes.infoIcon} />
-          </Tooltip>
+          <div className={classes.iconTooltipContainer}>
+            <InfoIcon />
+            <p>{infoMsg}</p>
+          </div>
         ) : null}
         <div className={classes.textFieldWithExtraText}>
           <StyledTextField

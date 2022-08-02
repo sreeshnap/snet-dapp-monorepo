@@ -53,6 +53,8 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   entityTypeDropDown: {
+    display: "flex",
+    alignItems: "flex-start",
     marginLeft: 24,
     "& > div": {
       width: 320,

@@ -4,7 +4,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import InfoIcon from "@material-ui/icons/Info";
-import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
@@ -15,9 +14,10 @@ const StyledDropdown = ({ labelTxt, list, value, onChange, formControlProps, inp
   return (
     <>
       {icon ? (
-        <Tooltip title={infoMsg ? infoMsg : ""}>
-          <InfoIcon className={classes.infoIcon} />
-        </Tooltip>
+        <div className={classes.iconTooltipContainer}>
+          <InfoIcon />
+          <p>{infoMsg}</p>
+        </div>
       ) : null}
 
       <FormControl variant="outlined" className={classes.formControl} {...formControlProps}>

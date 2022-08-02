@@ -1,10 +1,34 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
-  infoIcon: {
-    padding: "5px 10px 0 0",
-    fontSize: 20,
-    color: "#d6d6d6",
+  iconTooltipContainer: {
+    width: "auto !important",
+    position: "relative",
+    "& > svg": {
+      paddingRight: 8,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 377,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 9,
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+      zIndex: 999,
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
+    },
   },
   formControl: {
     width: 364,
