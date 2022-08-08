@@ -25,13 +25,15 @@ class AiServiceCreation extends Component {
       );
     }
   };
- validateservicemetadata = () => {
-    const {shortDescription,longDescription,tags,projectURL,contributors} = this.props.serviceDetails;
-    return (shortDescription.length && longDescription.length && tags.length && projectURL.length  && contributors.length);
+
+  validateservicemetadata = () => {
+    const { shortDescription, longDescription, tags, projectURL, contributors } = this.props.serviceDetails;
+    return shortDescription.length && longDescription.length && tags.length && projectURL.length && contributors.length;
   };
+
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets, shortDescription, demoComponentAvailable } = this.props.serviceDetails;
+    const { progressStages, assets, demoComponentAvailable } = this.props.serviceDetails;
 
     const { demoFiles, protoFiles } = assets;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -142,7 +142,7 @@ class SNETAudioUpload extends React.Component {
 
     // Color Palette
     this.mainColor = this.props.mainColor[500];
-    this.theme = createMuiTheme({
+    this.theme = createTheme({
       palette: {
         primary: this.props.mainColor,
         error: red,
@@ -178,7 +178,7 @@ class SNETAudioUpload extends React.Component {
   }
 
   // When props.outputImage changes, the component changes to the display mode.
-  componentWillReceiveProps(nextProps, nextContent) {
+  componentWillReceiveProps(nextProps) {
     let mimeType;
 
     //"data:" + this.state.outputImageMimeType + ";base64," +
@@ -478,7 +478,7 @@ class SNETAudioUpload extends React.Component {
        - URL IMAGE SEARCH -
     *  --------------------*/
 
-  toDataUrl(src, outputFormat) {
+  toDataUrl(src) {
     const filename = src.substring(src.lastIndexOf("/") + 1);
     const img = new Image();
     const callback = this.verifyAndUpload;
@@ -734,7 +734,7 @@ class SNETAudioUpload extends React.Component {
        - INITIAL STATE -
     *  -----------------*/
 
-  handleTabChange(event, value) {
+  handleTabChange(value) {
     this.setState({
       value,
     });

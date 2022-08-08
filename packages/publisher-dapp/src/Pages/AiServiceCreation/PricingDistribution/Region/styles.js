@@ -41,6 +41,7 @@ export const useStyles = makeStyles(MUITheme => ({
         "& > div": {
           maxWidth: "100%",
           flexBasis: "100%",
+          alignItems: "flex-start",
           "& > div": {
             "&:last-of-type": {
               "& > div": { marginTop: 0 },
@@ -52,8 +53,12 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   entityTypeDropDown: {
+    display: "flex",
+    alignItems: "flex-start",
+    marginLeft: 24,
     "& > div": {
-      width: "93%",
+      width: 320,
+      padding: 0,
       "& label": { padding: "0 5px" },
       "& > div": {
         background: MUITheme.palette.text.white,

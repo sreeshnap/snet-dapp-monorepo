@@ -20,6 +20,7 @@ const SNETTextfield = ({
   disabled,
   description,
   icon,
+  infoMsg,
   onKeyUp,
   extraInfo,
   inputRef,
@@ -31,8 +32,9 @@ const SNETTextfield = ({
     <Grid container className={error ? classes.errorField : ""}>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.basicTextFieldGrid}>
         {icon ? (
-          <div className={classes.infoIconContainer}>
+          <div className={classes.iconTooltipContainer}>
             <InfoIcon />
+            <p>{infoMsg}</p>
           </div>
         ) : null}
         <div className={classes.textFieldWithExtraText}>

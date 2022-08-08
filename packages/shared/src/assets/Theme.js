@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
-export const MUITheme = createMuiTheme({
+export const MUITheme = createTheme({
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
     values: {

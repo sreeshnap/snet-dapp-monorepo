@@ -139,7 +139,7 @@ export const useStyles = MUITheme => ({
     padding: "0 20px 0 5px",
     position: "absolute",
     top: 13,
-    left: 40,
+    left: 10,
     background: MUITheme.palette.text.white,
     color: MUITheme.palette.text.darkGrey,
     fontFamily: MUITheme.typography.fontFamily,
@@ -167,7 +167,7 @@ export const useStyles = MUITheme => ({
   },
   chip: { margin: "0 10px 10px 0" },
   projUrlContainer: {
-    padding: "0 29px",
+    padding: 0,
     [MUITheme.breakpoints.down("sm")]: { paddingRight: 0 },
   },
   contributorsContainer: {
