@@ -11,4 +11,8 @@ export const NetworkNames = [
     networkId: 42,
     networkName: "Kovan",
   },
+  {
+    networkId: 5,
+    networkName: "Goerli",
+  },
 ];
