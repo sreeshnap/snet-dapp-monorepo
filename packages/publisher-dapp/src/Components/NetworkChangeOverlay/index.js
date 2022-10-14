@@ -15,6 +15,7 @@ import { ethereumEvents, ethereumMethods } from "shared/dist/utils/snetSdk";
 const Networks = {
   1: "main",
   3: "ropsten",
+  5: "goerli",
 };
 
 const networkChangeAlert = {
