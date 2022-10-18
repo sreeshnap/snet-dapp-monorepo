@@ -34,7 +34,7 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets, demoComponentAvailable, groups } = this.props.serviceDetails;
+    const { progressStages, assets, demoComponentAvailable, groups, serviceState } = this.props.serviceDetails;
 
     const { demoFiles, protoFiles } = assets;
 
@@ -81,8 +81,6 @@ class AiServiceCreation extends Component {
           progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
         }
       }
-
-      console.log("SERVICE DEATILS", this.props.serviceDetails);
 
       if (
         stage.section === sections.PRICING_AND_DISTRIBUTION &&
