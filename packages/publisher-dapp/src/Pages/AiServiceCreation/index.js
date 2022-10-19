@@ -14,6 +14,7 @@ import Loader from "./Loader";
 import { LoaderContent } from "../../Utils/Loader";
 import EditHeader from "./EditHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { isEmpty } from "lodash";
 
 class AiServiceCreation extends Component {
   navigateToSubmitIfRejected = async status => {
@@ -33,7 +34,7 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets, demoComponentAvailable } = this.props.serviceDetails;
+    const { progressStages, assets, demoComponentAvailable, groups, serviceState } = this.props.serviceDetails;
 
     const { demoFiles, protoFiles } = assets;
 
@@ -69,6 +70,23 @@ class AiServiceCreation extends Component {
         if (!demoComponentAvailable && protoFiles.status === progressStatus.SUCCEEDED) {
           progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
         }
+
+        if (
+          groups[0].daemonAddresses.length === 0 ||
+          isEmpty(groups[0].endpoints) ||
+          (demoComponentAvailable &&
+            demoFiles.status === progressStatus.FAILED &&
+            protoFiles.status === progressStatus.FAILED)
+        ) {
+          progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
+        }
+      }
+
+      if (
+        stage.section === sections.PRICING_AND_DISTRIBUTION &&
+        (groups[0].daemonAddresses.length === 0 || isEmpty(groups[0].endpoints))
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
       }
     }
 
