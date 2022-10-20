@@ -45,6 +45,7 @@ const ServiceStatusDetails = props => {
   const Networks = {
     1: "main",
     3: "ropsten",
+    5: "goerli",
   };
   const configValidation = [
     ["blockchain_enabled", "true"],
