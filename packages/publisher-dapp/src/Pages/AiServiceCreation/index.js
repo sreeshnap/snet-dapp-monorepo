@@ -34,11 +34,12 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets, demoComponentAvailable, groups, serviceState } = this.props.serviceDetails;
+    const { progressStages, assets, demoComponentAvailable, groups } = this.props.serviceDetails;
 
     const { demoFiles, protoFiles } = assets;
 
     for (const stage of progressStages) {
+
       if (stage.section === sections.SETUP_DEMO && !demoComponentAvailable) {
         progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
       } else if (stage.section === sections.SETUP_DEMO && demoComponentAvailable && demoFiles.status) {

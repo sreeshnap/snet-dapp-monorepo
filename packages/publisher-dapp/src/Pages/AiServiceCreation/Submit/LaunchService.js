@@ -23,7 +23,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     image: VerificationPending,
   });
 
-  const { orgId, progressStages, demoComponentAvailable } = useSelector(state => state.aiServiceDetails);
+  const { orgId, progressStages, demoComponentAvailable, serviceState } = useSelector(state => state.aiServiceDetails);
 
   const { orgUuid, serviceUuid } = useParams();
 
@@ -37,6 +37,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
 
       const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase();
       const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase();
+      const serviceStatus = serviceState.state;
 
       if (isNil(protoFileBuildStatus)) {
         dispatch(aiServiceDetailsActions.updateProgressStatus(sections.LAUNCH, progressStatus.FAILED, progressStages));
@@ -78,6 +79,12 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
           description: "Proto compilation is in progress... please check back after sometime",
           image: VerificationPending,
         };
+      } else if (serviceStatus === serviceCreationStatus.PUBLISHED) {
+        serviceStatusSection = {
+          title: "The service is already Published",
+          description: "",
+          image: VerificationApproved,
+        };
       } else {
         serviceStatusSection = {
           title: "Unable to Publish the Service",
@@ -104,7 +111,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
             variant: "contained",
             color: "primary",
             onClick: handleSubmit,
-            disabled: !isLaunchable,
+            disabled: !isLaunchable || serviceState.state === serviceCreationStatus.PUBLISHED,
           },
           { children: "back to dashboard", variant: "outlined", color: "primary", onClick: handleBackToDashboard },
         ]}
