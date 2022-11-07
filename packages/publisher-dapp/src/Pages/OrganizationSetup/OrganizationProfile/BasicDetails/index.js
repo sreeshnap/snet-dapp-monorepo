@@ -76,6 +76,7 @@ const BasicDetails = ({ classes, invalidFields }) => {
         value={shortDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        infoMsg="A short description about your Organization, which shouldn't be more then 160 character."
         disabled={foundInBlockchain}
         error={"shortDescription" in invalidFields}
       />
@@ -89,6 +90,7 @@ const BasicDetails = ({ classes, invalidFields }) => {
         value={longDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        infoMsg="A long description, giving some brief details about your Organization, which shouldn't be more then 5000 character."
         disabled={foundInBlockchain}
         error={"longDescription" in invalidFields}
       />

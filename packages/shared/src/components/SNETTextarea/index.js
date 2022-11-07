@@ -17,6 +17,7 @@ const SNETTextarea = ({
   minCount,
   maxCount,
   showInfoIcon,
+  infoMsg,
   extraInfo,
   disabled,
   error,
@@ -24,8 +25,9 @@ const SNETTextarea = ({
   return (
     <div className={classes.textareaIconContainer}>
       {showInfoIcon ? (
-        <div className={classes.infoIconContainer}>
+        <div className={classes.iconTooltipContainer}>
           <InfoIcon />
+          <p>{infoMsg}</p>
         </div>
       ) : null}
       <div className={classes.textareaContainer}>

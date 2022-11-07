@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import InfoIcon from "@material-ui/icons/Info";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +19,7 @@ import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints, daemonValidationConstraints } from "../validationConstraints";
 import { agiToCogs } from "shared/dist/utils/Pricing";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
+import BigNumber from "bignumber.js";
 
 import AlertText from "shared/dist/components/AlertText";
 
@@ -185,8 +185,12 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     changeGroups(updatedServiceGroups);
   };
 
+  const isDecimalPlacesExceeds = (value, decimals) => {
+    return new BigNumber(value).decimalPlaces() > decimals;
+  };
+
   const handlePriceValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
+    const isNotValid = value >= cogsToAgi(1) && !isDecimalPlacesExceeds(value, 8) ? false : true;
     if (isNotValid) {
       return setPriceValidation({
         type: alertTypes.ERROR,
@@ -232,9 +236,10 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <SNETTextfield
                 icon
+                infoMsg="Price in AGIX"
                 name="price"
                 defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
-                label="AI Service Price (in AGIX)"
+                label="AI Service Price"
                 onChange={handlePriceChange}
                 error={!!invalidFields ? "pricing" in invalidFields : false}
               />
@@ -242,7 +247,9 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} className={classes.entityTypeDropDown}>
               <StyledDropdown
-                inputLabel="Entity Type"
+                icon
+                infoMsg="Pricing model"
+                inputLabel="Price Model"
                 value={selectedServicePricing && selectedServicePricing.priceModel}
                 list={[{ value: "fixed_price", label: "Fixed price per call" }]}
               />
@@ -252,6 +259,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
               icon
+              infoMsg="Number of free calls per user"
               name="freeCallsAllowed"
               value={selectedServiceGroup.freeCallsAllowed}
               label="Demo Free Calls"
@@ -261,7 +269,6 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
-              icon
               name="endpoints"
               inputRef={endpointRef}
               onKeyUp={handleNewEndpointsChangeOnKeyPress}
@@ -280,9 +287,6 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
           <AlertBox type={alert.type} message={alert.message} />
 
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
-            <div className={classes.infoIconContainer}>
-              <InfoIcon />
-            </div>
             <div className={classes.cardContainer}>
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
@@ -302,7 +306,6 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
-              icon
               name="daemonAdresses"
               inputRef={addressRef}
               onKeyUp={handleNewDaemonAddressChangeOnKeyPress}
@@ -323,9 +326,6 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
             <AlertBox type={daemonAddressValidation.type} message={daemonAddressValidation.message} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
-            <div className={classes.infoIconContainer}>
-              <InfoIcon />
-            </div>
             <div className={classes.cardContainer}>
               <span className={classes.label}>Added Addresses</span>
               <Card className={classes.card}>

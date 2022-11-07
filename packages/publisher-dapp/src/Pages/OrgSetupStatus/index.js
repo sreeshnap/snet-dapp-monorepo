@@ -12,7 +12,6 @@ import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import VerificationRejected from "./VerificationRejected";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import VerificationChangeRequested from "./VerificationChangeRequested";
-// import { orgVerificationActions } from "../../Services/Redux/actionCreators/userActions";
 
 const Banners = {
   [organizationSetupStatuses.APPROVAL_PENDING]: VerificationPending,
@@ -31,16 +30,6 @@ const selectState = state => ({
 
 const OrgSetupStatus = ({ classes, history }) => {
   const { status, uuid } = useSelector(selectState);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (
-  //     status === organizationSetupStatuses.ONBOARDING_REJECTED ||
-  //     status === organizationSetupStatuses.CHANGE_REQUESTED
-  //   ) {
-  //     dispatch(orgVerificationActions.getVerificationStatus(uuid));
-  //   }
-  // }, [dispatch, status, uuid]);
 
   useEffect(() => {
     if (status === organizationSetupStatuses.PUBLISHED || status === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {

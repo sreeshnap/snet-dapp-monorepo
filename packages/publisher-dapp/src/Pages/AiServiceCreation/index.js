@@ -14,6 +14,7 @@ import Loader from "./Loader";
 import { LoaderContent } from "../../Utils/Loader";
 import EditHeader from "./EditHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { isEmpty } from "lodash";
 
 class AiServiceCreation extends Component {
   navigateToSubmitIfRejected = async status => {
@@ -25,17 +26,20 @@ class AiServiceCreation extends Component {
       );
     }
   };
- validateservicemetadata = () => {
-    const {shortDescription,longDescription,tags,projectURL,contributors} = this.props.serviceDetails;
-    return (shortDescription.length && longDescription.length && tags.length && projectURL.length  && contributors.length);
+
+  validateservicemetadata = () => {
+    const { shortDescription, longDescription, tags, projectURL, contributors } = this.props.serviceDetails;
+    return shortDescription.length && longDescription.length && tags.length && projectURL.length && contributors.length;
   };
+
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets, shortDescription, demoComponentAvailable } = this.props.serviceDetails;
+    const { progressStages, assets, demoComponentAvailable, groups } = this.props.serviceDetails;
 
     const { demoFiles, protoFiles } = assets;
 
     for (const stage of progressStages) {
+
       if (stage.section === sections.SETUP_DEMO && !demoComponentAvailable) {
         progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
       } else if (stage.section === sections.SETUP_DEMO && demoComponentAvailable && demoFiles.status) {
@@ -67,6 +71,23 @@ class AiServiceCreation extends Component {
         if (!demoComponentAvailable && protoFiles.status === progressStatus.SUCCEEDED) {
           progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
         }
+
+        if (
+          groups[0].daemonAddresses.length === 0 ||
+          isEmpty(groups[0].endpoints) ||
+          (demoComponentAvailable &&
+            demoFiles.status === progressStatus.FAILED &&
+            protoFiles.status === progressStatus.FAILED)
+        ) {
+          progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
+        }
+      }
+
+      if (
+        stage.section === sections.PRICING_AND_DISTRIBUTION &&
+        (groups[0].daemonAddresses.length === 0 || isEmpty(groups[0].endpoints))
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
       }
     }
 

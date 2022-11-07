@@ -45,6 +45,7 @@ const ServiceStatusDetails = props => {
   const Networks = {
     1: "main",
     3: "ropsten",
+    5: "goerli",
   };
   const configValidation = [
     ["blockchain_enabled", "true"],
@@ -166,7 +167,7 @@ const ServiceStatusDetails = props => {
   };
 
   const handleApproved = () => {
-    const path = ServiceCreationRoutes.SUBMIT.path;
+    const path = ServiceCreationRoutes.LAUNCH.path;
     const redirectTo = path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid);
     history.push(redirectTo);
   };
