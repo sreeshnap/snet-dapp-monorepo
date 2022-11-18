@@ -58,7 +58,7 @@ class AiServiceCreation extends Component {
         progressStage = { ...progressStage, [stage.key]: progressStatus.PENDING };
       }
 
-      if (stage.section === sections.LAUNCH && id !== "") {
+      if (stage.section === sections.LAUNCH && id.length > 0) {
         if (
           demoComponentAvailable &&
           demoFiles.status === progressStatus.SUCCEEDED &&
@@ -85,7 +85,7 @@ class AiServiceCreation extends Component {
       if (
         stage.section === sections.PRICING_AND_DISTRIBUTION &&
         (groups[0].daemonAddresses.length === 0 || isEmpty(groups[0].endpoints)) &&
-        id !== ""
+        id.length > 0
       ) {
         progressStage = { ...progressStage, [stage.key]: progressStatus.FAILED };
       }
