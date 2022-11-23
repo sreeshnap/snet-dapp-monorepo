@@ -15,7 +15,14 @@ import UploadDemoFiles from "./UploadDemoFiles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
-const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
+const Demo = ({
+  classes,
+  serviceDetails,
+  changeDemoFiles,
+  setServiceDetailsInRedux,
+  selectedFile,
+  uploadDemoFilesDetails,
+}) => {
   const dispatch = useDispatch();
   const { orgUuid } = useParams();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
@@ -119,6 +126,8 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
                 changeDemoFiles={changeDemoFiles}
                 error={serviceDetails.assets.demoFiles.url ? "" : invalidFieldsFlag}
                 showUploadNotification={type => showUploadNotification(type)}
+                selectedFile={selectedFile}
+                uploadDemoFilesDetails={uploadDemoFilesDetails}
               />
             </div>
           ) : null}

@@ -15,10 +15,17 @@ import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { progressStatus } from "../../constant";
 
-const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields, protoFileError }) => {
+const UploadProto = ({
+  changeProtoFiles,
+  protoFilesUrl,
+  invalidFields,
+  protoFileError,
+  selectedFilePricing,
+  uploadProtoFilesDetailsForPricing,
+}) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
-  const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
+  // const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
 
@@ -68,7 +75,8 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields, protoFile
           const fileBlob = acceptedFiles[0];
           await validateProtoFile(fileBlob);
           const { name, size, type } = fileBlob;
-          setSelectedFile({ name, size, type });
+          // setSelectedFile({ name, size, type });
+          uploadProtoFilesDetailsForPricing({ name, size, type });
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
@@ -83,7 +91,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields, protoFile
         }
       }
     },
-    [changeProtoFiles, dispatch, orgUuid, serviceUuid]
+    [changeProtoFiles, dispatch, orgUuid, serviceUuid, uploadProtoFilesDetailsForPricing]
   );
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
@@ -114,8 +122,10 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields, protoFile
             <Typography>* Make sure the extension is .zip</Typography>
           </>
         }
-        fileName={selectedFile.name}
-        fileSize={selectedFile.size}
+        // fileName={selectedFile.name}
+        // fileSize={selectedFile.size}
+        fileName={selectedFilePricing.name}
+        fileSize={selectedFilePricing.size}
         fileDownloadURL={protoFilesUrl}
         uploadSuccess={Boolean(protoFilesUrl)}
         error={!!invalidFields && !Boolean(protoFilesUrl) ? "assets.protoFiles.url" in invalidFields : ""}

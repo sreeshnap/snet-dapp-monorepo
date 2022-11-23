@@ -46,7 +46,15 @@ class PricingDistribution extends Component {
   };
 
   render() {
-    const { classes, changeGroups, serviceDetails, changeProtoFiles, setServiceDetailsInRedux } = this.props;
+    const {
+      classes,
+      changeGroups,
+      serviceDetails,
+      changeProtoFiles,
+      setServiceDetailsInRedux,
+      selectedFilePricing,
+      uploadProtoFilesDetailsForPricing,
+    } = this.props;
     return (
       <Grid container className={classes.pricingContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -67,6 +75,8 @@ class PricingDistribution extends Component {
               protoFilesUrl={serviceDetails.assets.protoFiles.url}
               invalidFields={this.state.invalidFields}
               protoFileError={this.props.serviceDetailsState.assets.protoFiles.status}
+              selectedFilePricing={selectedFilePricing}
+              uploadProtoFilesDetailsForPricing={uploadProtoFilesDetailsForPricing}
             />
             <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
             <div className={classes.alertContainer}>
