@@ -17,6 +17,22 @@ import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { isEmpty } from "lodash";
 
 class AiServiceCreation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedFile: { name: "", size: "", type: "" },
+      selectedFilePricing: { name: "", size: "", type: "" },
+    };
+  }
+
+  uploadDemoFilesDetails = selectedFile => {
+    this.setState({ selectedFile });
+  };
+
+  uploadProtoFilesDetailsForPricing = selectedFilePricing => {
+    this.setState({ selectedFilePricing });
+  };
+
   navigateToSubmitIfRejected = async status => {
     if (status === serviceCreationStatus.REJECTED) {
       const { history, match } = this.props;
@@ -246,6 +262,7 @@ class AiServiceCreation extends Component {
 
   render() {
     const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
+    const { selectedFile, selectedFilePricing } = this.state;
     return (
       <div className={classes.serviceCreationContainer}>
         {serviceFoundInBlockchain ? (
@@ -271,6 +288,10 @@ class AiServiceCreation extends Component {
           changeServiceState={this.handleServiceStateChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
           handleBackToDashboard={this.handleBackToDashboard}
+          selectedFile={selectedFile}
+          uploadDemoFilesDetails={this.uploadDemoFilesDetails}
+          selectedFilePricing={selectedFilePricing}
+          uploadProtoFilesDetailsForPricing={this.uploadProtoFilesDetailsForPricing}
         />
         <Loader />
       </div>

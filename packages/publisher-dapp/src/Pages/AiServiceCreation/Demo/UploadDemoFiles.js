@@ -18,9 +18,10 @@ const UploadDemoFiles = ({
   changeDemoFiles,
   error,
   showUploadNotification,
+  selectedFile,
+  uploadDemoFilesDetails,
 }) => {
   const [alert, setAlert] = useState({});
-  const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const UploadDemoFiles = ({
           const fileBlob = acceptedFiles[0];
           await validateIndexFile(fileBlob);
           const { name, size, type } = fileBlob;
-          setSelectedFile({ name, size, type });
+          uploadDemoFilesDetails({ name, size, type });
 
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PAGE_COMPONENTS, fileBlob, orgUuid, serviceUuid)
@@ -55,7 +56,7 @@ const UploadDemoFiles = ({
         }
       }
     },
-    [changeDemoFiles, dispatch, orgUuid, serviceUuid]
+    [changeDemoFiles, dispatch, orgUuid, serviceUuid, uploadDemoFilesDetails]
   );
 
   const validateIndexFile = uploadedFile => {
