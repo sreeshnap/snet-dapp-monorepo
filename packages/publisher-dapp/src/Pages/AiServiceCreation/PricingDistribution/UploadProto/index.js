@@ -25,7 +25,6 @@ const UploadProto = ({
 }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
-  // const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
 
@@ -75,7 +74,6 @@ const UploadProto = ({
           const fileBlob = acceptedFiles[0];
           await validateProtoFile(fileBlob);
           const { name, size, type } = fileBlob;
-          // setSelectedFile({ name, size, type });
           uploadProtoFilesDetailsForPricing({ name, size, type });
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
@@ -122,8 +120,6 @@ const UploadProto = ({
             <Typography>* Make sure the extension is .zip</Typography>
           </>
         }
-        // fileName={selectedFile.name}
-        // fileSize={selectedFile.size}
         fileName={selectedFilePricing.name}
         fileSize={selectedFilePricing.size}
         fileDownloadURL={protoFilesUrl}

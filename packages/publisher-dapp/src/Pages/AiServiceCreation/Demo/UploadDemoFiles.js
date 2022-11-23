@@ -22,7 +22,6 @@ const UploadDemoFiles = ({
   uploadDemoFilesDetails,
 }) => {
   const [alert, setAlert] = useState({});
-  // const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,7 +43,6 @@ const UploadDemoFiles = ({
           const fileBlob = acceptedFiles[0];
           await validateIndexFile(fileBlob);
           const { name, size, type } = fileBlob;
-          // setSelectedFile({ name, size, type });
           uploadDemoFilesDetails({ name, size, type });
 
           const { url } = await dispatch(
